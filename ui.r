@@ -7,14 +7,14 @@ ui <- fluidPage(
     fluidRow(
         
         # Enter a hashtag that interests you.
-        column(5, textInput(inputId = "word",
+        column(5, textInput(inputId = "hashtag",
                            label = "Hashtag",
                            value='corona')),
         
         #Select sample size
-        column(5, sliderInput(inputId='n',
+        column(5, sliderInput(inputId='sampleSize',
                              label='Sample Size',
-                             value=200,
+                             value=100,
                              min=100,
                              max=1000))
     ),
@@ -23,9 +23,12 @@ ui <- fluidPage(
     tabsetPanel(
         
         # Output(s)
-        tabPanel('Wordclouds',wordcloud2Output(outputId = "wordcloud")),
-        tabPanel('Frequency Table',DT::dataTableOutput(outputId = "table")),
-        tabPanel('Tweets',DT::dataTableOutput(outputId='txt'))
+        tabPanel('Wordcloud',
+                 wordcloud2Output(outputId = "wordcloud")),
+        tabPanel('Frequency Table', 
+                 dataTableOutput(outputId = "frequencyTable")),
+        tabPanel('Tweets', 
+                 dataTableOutput(outputId='tweets'))
     )
     
 )
