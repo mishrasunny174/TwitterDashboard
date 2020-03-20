@@ -1,7 +1,7 @@
 ui <- fluidPage(
     
     # Application title
-    titlePanel("WordCloud for Twitter Hashtags"),
+    titlePanel("Hashtag Analysis"),
     
     # Inputs(s) panel
     fluidRow(

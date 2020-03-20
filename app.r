@@ -12,6 +12,7 @@ checkAndLoad("shinythemes")
 checkAndLoad("httr")
 checkAndLoad("rtweet")
 checkAndLoad("DT")
+checkAndLoad("syuzhet")
 
 source("twitterBackend.r")
 source("ui.r") #load ui object
