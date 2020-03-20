@@ -14,3 +14,9 @@ getTweetsFreqDf <- function(df) {
   tweetsFreqDf <- data.frame(word = names(tweetsMatrix), freq = tweetsMatrix)
   tweetsFreqDf
 }
+
+isEmptyString <- function(tag) {
+  if (tag == "")
+    return(TRUE)
+  return(FALSE)
+}

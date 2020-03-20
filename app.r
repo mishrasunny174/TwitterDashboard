@@ -13,8 +13,9 @@ checkAndLoad("httr")
 checkAndLoad("rtweet")
 checkAndLoad("DT")
 checkAndLoad("syuzhet")
+checkAndLoad("shinyalert")
 
-source("twitterBackend.r")
+source("twitterBackend.r") #load twitter backend
 source("ui.r") #load ui object
 source("server.r") #load server function
 

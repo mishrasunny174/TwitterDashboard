@@ -11,16 +11,17 @@ getTweets <- function(hashtag, sampleSize) {
   
   df <- search_tweets(paste("#", hashtag, sep = ""), n=sampleSize)
   df$cleanText <- as.character(df$text)
+  df$cleanText <- gsub("(ftp|http(s)*)://.*", " ", df$cleanText) #remove urls
   df$cleanText <- stripWhitespace(df$cleanText)
   df$cleanText <- removePunctuation(df$cleanText)
   df$cleanText <- replace_internet_slang(df$cleanText)
   df$cleanText <- replace_emoji(df$cleanText)
   df$cleanText <- replace_contraction(df$cleanText)
   df$cleanText <- removeWords(df$cleanText, stopwords())
-  df$cleanText <- gsub(pattern="\\d",replace=" ",df$cleanText)
+  df$cleanText <- gsub(pattern="\\d", replace=" ", df$cleanText)
   df$cleanText <- gsub("[[:punct:]]", " ", df$cleanText)
-  df$cleanText <- gsub("(f|ht)+p(s?)://(.*)[.][a-z]+"," ",df$cleanText)
-  df$cleanText <- gsub(pattern="\\b[a-z]\\b{1}","", df$cleanText)
+  df$cleanText <- gsub(pattern="\\b[a-z]\\b{1}", "", df$cleanText)
   df$cleanText <- tolower(df$cleanText)
+  df$cleanText <- removeWords(df$cleanText, c(hashtag))
   df
 }

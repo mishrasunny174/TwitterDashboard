@@ -2,6 +2,14 @@ server <- function(input, output) {
   
   getHashtag <- reactive(
     {
+      if(input$hashtag == "") {
+        shinyalert(title = "Oops!",
+                   text = "Please enter a hashtag",
+                   type = "error")
+      }
+      validate(
+        need(input$hashtag != "", message = "")
+      )
       input$hashtag
     }
   )
@@ -9,6 +17,14 @@ server <- function(input, output) {
   # reactive expression to get tweets
   tweets <- reactive(
     {
+      if(input$sampleSize < 100 || input$sampleSize > 1000) {
+        shinyalert(title = "Oops!",
+                   text = "Please enter a valid sample size",
+                   type = "error")
+      }
+      validate(
+        need(input$sampleSize >= 100 && input$sampleSize <= 1000, message = "")
+      )
       getTweets(getHashtag(), input$sampleSize)
     }
   )
@@ -21,6 +37,7 @@ server <- function(input, output) {
     }
   )
   
+  #reactive expression to calculate the sentiments
   sentimentDf <- reactive(
     {
       tweetsText <- tweets()$cleanText
@@ -54,7 +71,7 @@ server <- function(input, output) {
               las = 2,
               col = rainbow(10),
               ylab = 'Count',
-              main = paste('Sentiment Scores for', getHashtag()  ,'Tweets'))
+              main = paste('Sentiment Scores for', paste("#", getHashtag(), sep="")  ,'Tweets'))
     }
   )
   

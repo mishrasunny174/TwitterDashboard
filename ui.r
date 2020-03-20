@@ -1,4 +1,6 @@
 ui <- fluidPage(
+    # setup shiny alerts
+    useShinyalert(),
     
     # Application title
     titlePanel("Hashtag Analysis"),
@@ -10,8 +12,8 @@ ui <- fluidPage(
         column(width = 4,
                offset = 0,
                textInput(inputId = "hashtag",
-                           label = "Hashtag",
-                           value='corona')),
+                         label = "Enter any hashtag to analyze",
+                         value = "corona")),
         
         #Select sample size
         column(width = 4,
