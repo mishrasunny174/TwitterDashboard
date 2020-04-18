@@ -9,14 +9,13 @@ getSVNTrainedSentimentAnalysisModel <- function(){
     return(fit)
 }
 
-getSVMConfusionMatrix <- function(useCache = TRUE) {
+getSVMConfusionMatrix <- function(useCache = TRUE, size = 100, p = 0.5) {
   if(file.exists(svmCMCacheFile) && useCache) {
     load(svmCMCacheFile)
     return(cm)
   }
-  df <- getTrainingData()
-  trainDataIndex <- createDataPartition(df$s, p=0.6, list = FALSE)
-  print(range(trainDataIndex))
+  df <- getTrainingData(size = size)
+  trainDataIndex <- createDataPartition(df$s, p=p, list = FALSE)
   trainDf <- df[trainDataIndex, ]
   testDf <- df[-trainDataIndex, ]
   fit <- train(s~., data = trainDf, method="svmLinear")

@@ -1,5 +1,3 @@
-cleanReviewsFilename <- "./data/cleanReviews.csv"
-
 getMovieSentimentDf <- function(size=100) {
   posBase = "./data/txt_sentoken/pos/"
   negBase = "./data/txt_sentoken/neg/"
@@ -24,12 +22,13 @@ getMovieSentimentDf <- function(size=100) {
   return(reviewDf)
 }  
 
-getCleanMovieSentimentDf <- function () {
+getCleanMovieSentimentDf <- function (size = 100) {
+  cleanReviewsFilename <- paste("./data/cleanReviews",size,".csv", sep="")
   if(file.exists(cleanReviewsFilename)){
     df <- read.csv(cleanReviewsFilename)
     return(data.frame(text=df$text, sentiment=df$sentiment)) 
   }
-  uncleanDf <- getMovieSentimentDf()
+  uncleanDf <- getMovieSentimentDf(size = size)
   uncleanDf$cleanText <- gsub("(ftp|http(s)*)://.*", " ", uncleanDf$text) # remove urls if there any in the dataset
   uncleanDf$cleanText <- removePunctuation(uncleanDf$cleanText) # remove puntuations
   uncleanDf$cleanText <- replace_internet_slang(uncleanDf$cleanText) # remove internet slang
@@ -46,8 +45,8 @@ getCleanMovieSentimentDf <- function () {
   return(cleanDf)
 }
 
-getTrainingData <- function() {
-  df <- getCleanMovieSentimentDf()
+getTrainingData <- function(size = 100) {
+  df <- getCleanMovieSentimentDf(size = size)
   df <- data.frame(text = df$text, s = df$sentiment)
   textCorpus = VCorpus(VectorSource(df$text))
   tdm <- DocumentTermMatrix(textCorpus)

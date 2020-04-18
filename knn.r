@@ -1,6 +1,6 @@
 knnCNCacheFile <- "./cache/knnCNCacheFile"
 
-getKNNTrainedSentimentAnalysisModel <- function(){
+getKNNTrainedSentimentAnalysisModel <- function(size=100){
   df <- getTrainingData()
   trainDataIndex <- createDataPartition(df$s, p=0.6, list = FALSE)
   trainDf <- df[trainDataIndex, ]
@@ -9,7 +9,7 @@ getKNNTrainedSentimentAnalysisModel <- function(){
   return(fit)
 }
 
-getKNNConfusionMatrix <- function(useCache = TRUE) {
+getKNNConfusionMatrix <- function(size = 100, useCache = TRUE, p = 0.5) {
   if(file.exists(knnCNCacheFile) && !useCache) {
     file.remove(knnCNCacheFile)
   }
@@ -17,8 +17,8 @@ getKNNConfusionMatrix <- function(useCache = TRUE) {
     load(knnCNCacheFile)
     return(cm)
   }
-  df <- getTrainingData()
-  trainDataIndex <- createDataPartition(df$s, p=0.6, list = FALSE)
+  df <- getTrainingData(size = size)
+  trainDataIndex <- createDataPartition(df$s, p=p, list = FALSE)
   trainDf <- df[trainDataIndex, ]
   testDf <- df[-trainDataIndex, ]
   set.seed(1337)
