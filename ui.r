@@ -62,34 +62,6 @@ ui <- fluidPage(
     tabPanel(
       "ML Approach",
       fluidPage(
-        # Inputs(s) panel
-        fluidRow(
-
-          # Select sample size
-          column(
-            width = 4,
-            offset = 0,
-            sliderInput(
-              inputId = "sampleSizeML",
-              label = "Sample size for model",
-              value = 100,
-              min = 10,
-              max = 400
-            )
-          ),
-          column(
-            width = 4,
-            offset = 4,
-            sliderInput(
-              inputId = "trainTestRatio",
-              label = "Train test ratio (p)",
-              value = 0.5,
-              min = 0.1,
-              max = 0.9
-            )
-          )
-        ),
-
         # Output tab panel
         tabsetPanel(
           tabPanel(

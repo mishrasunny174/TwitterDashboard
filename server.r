@@ -44,9 +44,7 @@ server <- function(input, output) {
   getKNNCF <- reactive({
     p <- shiny::Progress$new()
     p$set(message = "Training and testing model to compute confusion matrix")
-    cm <- getKNNConfusionMatrix(size = as.integer(input$sampleSizeML / 2) , 
-                                useCache = FALSE, 
-                                p = input$trainTestRatio)
+    cm <- getKNNConfusionMatrix(useCache = FALSE)
     on.exit(p$close())
     return(cm)
   })
@@ -55,9 +53,7 @@ server <- function(input, output) {
   getSVNCF <- reactive({
     p <- shiny::Progress$new()
     p$set(message = "Training and testing model to compute confusion matrix")
-    cm <- getSVMConfusionMatrix(size = as.integer(input$sampleSizeML / 2), 
-                                useCache = FALSE, 
-                                p = input$trainTestRatio)
+    cm <- getSVMConfusionMatrix( useCache = FALSE)
     on.exit(p$close())
     return(cm)
   })

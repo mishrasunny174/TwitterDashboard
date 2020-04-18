@@ -45,8 +45,8 @@ getCleanMovieSentimentDf <- function (size = 100) {
   return(cleanDf)
 }
 
-getTrainingData <- function(size = 100) {
-  df <- getCleanMovieSentimentDf(size = size)
+getTrainingData <- function() {
+  df <- getCleanMovieSentimentDf()
   df <- data.frame(text = df$text, s = df$sentiment)
   textCorpus = VCorpus(VectorSource(df$text))
   tdm <- DocumentTermMatrix(textCorpus)
