@@ -36,7 +36,9 @@ ui <- fluidPage(
         tabPanel('Tweets', 
                  dataTableOutput(outputId='tweets')),
         tabPanel("Sentiment Analysis", 
-                 plotOutput(outputId = "sentimentAnalysisPlot"))
+                 plotOutput(outputId = "sentimentAnalysisPlot")),
+        tabPanel("KNN Confusion matrix", 
+                 plotOutput(outputId = "knnCMPlot"))
         
     )
     

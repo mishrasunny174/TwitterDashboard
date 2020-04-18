@@ -14,8 +14,12 @@ checkAndLoad("rtweet")
 checkAndLoad("DT")
 checkAndLoad("syuzhet")
 checkAndLoad("shinyalert")
+checkAndLoad("caret")
 
 source("twitterBackend.r") #load twitter backend
+source("knn.r") # load KNN stuff
+source("svm.r") # load SVM stuff 
+# source("bayes.r") # load bayes stuff
 source("ui.r") #load ui object
 source("server.r") #load server function
 

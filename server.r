@@ -45,6 +45,16 @@ server <- function(input, output) {
     }
   )
   
+  # get knn confusion matrix
+  
+  getKNNCF <- reactive( {
+    p <- shiny::Progress$new()
+    p$set(message = "Training and testing model to compute confusion matrix")
+    cm <- getKNNConfusionMatrix(useCache=FALSE) 
+    on.exit(p$close())
+    return(cm)
+  })
+  
   #callback for frequencyTable TAB
   output$frequencyTable <- renderDataTable(tweetsFreqDf())
   
@@ -64,6 +74,7 @@ server <- function(input, output) {
     }
   )
   
+  # output ploit for sentiment analysis
   output$sentimentAnalysisPlot <- renderPlot(
     {
       df <- sentimentDf()
@@ -75,4 +86,9 @@ server <- function(input, output) {
     }
   )
   
+  # output plot for KNN confusion matrix
+  output$knnCMPlot <- renderPlot({
+    cm <- getKNNCF()
+    fourfoldplot(cm[["table"]], main="KNN Confusion matrix", conf.level = 0, margin = 1)
+  })
 }
