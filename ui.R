@@ -1,3 +1,5 @@
+source("dependencies.r")
+
 ui <- fluidPage(
   # setup shiny alerts
   useShinyalert(),
