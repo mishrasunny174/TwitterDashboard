@@ -39,4 +39,6 @@ vignettes/*.pdf
 # R Environment Variables
 .Renviron
 
+
+rsconnect/
 apikey.json
