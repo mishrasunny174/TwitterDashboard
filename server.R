@@ -1,3 +1,5 @@
+source("dependencies.r")
+
 server <- function(input, output) {
   # reactive expression to handle hashtag input in SYUZNET approach
   getHashtag <- reactive({
