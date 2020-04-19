@@ -1,11 +1,17 @@
-bayesCMCacheFile <- "./cache/bayesCMCacheFile"
+bayesCMCacheFile <- "./cache/bayesCMCacheFile.rdata"
+bayesModelCacheFile <- "./cache/bayesModelCacheFile.rdata"
 
-getBayesTrainedSentimentAnalysisModel <- function() {
+getBayesTrainedSentimentAnalysisModel <- function(useCache = TRUE) {
+  if(useCache && file.exists(bayesModelCacheFile)) {
+    load(bayesModelCacheFile)
+    return(fit)
+  }
   df <- getTrainingData()
   trainDataIndex <- createDataPartition(df$s, p = 0.6, list = FALSE)
   trainDf <- df[trainDataIndex, ]
   testDf <- df[-trainDataIndex, ]
   fit <- train(s ~ ., trainDf, method = "nb")
+  save(fit, file = bayesModelCacheFile)
   return(fit)
 }
 
@@ -21,7 +27,7 @@ getBayesConfusionMatrix <- function(useCache = TRUE) {
   trainDataIndex <- createDataPartition(df$s, p = 0.6, list = FALSE)
   trainDf <- df[trainDataIndex, ]
   testDf <- df[-trainDataIndex, ]
-  fit <- train(s ~ ., trainDf, method = "nb", trControl = trainControl(method = "cv", number = 10))
+  fit <- train(s ~ ., trainDf, method = "nb")
   predictions <- predict(fit, testDf)
   cm <- confusionMatrix(predictions, testDf$s)
   save(cm, file = bayesCNCacheFile)

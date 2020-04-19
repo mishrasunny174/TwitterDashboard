@@ -18,7 +18,7 @@ checkAndLoad("caret")
 
 source("twitterBackend.r") #load twitter backend
 source("knn.r") # load KNN stuff
-source("svm.r") # load SVM stuff 
+source("svm.r") # load SVM stuff
 # source("bayes.r") # load bayes stuff
 source("mineSentimentTrainingData.r") # load training stuff
 source("ui.r") #load ui object

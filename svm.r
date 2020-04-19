@@ -1,12 +1,24 @@
 svmCMCacheFile <- "./cache/svmCMCached.rdata"
+svmModelCacheFile <- "./cache/svmModelCached.rdata"
 
-getSVNTrainedSentimentAnalysisModel <- function(){
+getSVMTrainedSentimentAnalysisModel <- function(useCache = TRUE){
+    if(file.exists(svmModelCacheFile) && useCache) {
+      load(svmModelCacheFile)
+      return(fit)
+    }
     df <- getTrainingData()
-    trainDataIndex <- createDataPartition(df$s, p=0.6, list = FALSE)
-    trainDf <- df[trainDataIndex, ]
-    testDf <- df[-trainDataIndex, ]
-    fit <- train(s~., trainDf, method="svmLinear3")
+    fit <- train(s~., df, method="svmLinear3")
+    save(fit, file=svmModelCacheFile)
     return(fit)
+}
+
+svmPredict <- function(text) {
+  text <- cleanText(text)
+  corpus <- VCorpus(VectorSource(c(text)))
+  tdm <- DocumentTermMatrix(corpus, control = list(dictionary = getDictionary()))
+  test <- as.matrix(tdm)
+  predictions <- predict(getSVMTrainedSentimentAnalysisModel(useCache = TRUE), newdata=test)
+  return(predictions)
 }
 
 getSVMConfusionMatrix <- function(useCache = TRUE) {

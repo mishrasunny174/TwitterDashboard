@@ -1,12 +1,24 @@
-knnCNCacheFile <- "./cache/knnCNCacheFile"
+knnCNCacheFile <- "./cache/knnCNCacheFile.rdata"
+knnModelCacheFile <- "./cache/knnModelCacheFile.rdata"
 
-getKNNTrainedSentimentAnalysisModel <- function(){
+getKNNTrainedSentimentAnalysisModel <- function(useCache = TRUE){
+  if(file.exists(knnModelCacheFile) && useCache){
+    load(knnModelCacheFile)
+    return(fit)
+  }
   df <- getTrainingData()
-  trainDataIndex <- createDataPartition(df$s, p=0.6, list = FALSE)
-  trainDf <- df[trainDataIndex, ]
-  testDf <- df[-trainDataIndex, ]
-  fit <- train(s~., trainDf, method="knn")
+  fit <- train(s~., df, method="knn")
+  save(fit, file = knnModelCacheFile)
   return(fit)
+}
+
+knnPredict <- function(text) {
+  text <- cleanText(text)
+  corpus <- VCorpus(VectorSource(c(text)))
+  tdm <- DocumentTermMatrix(corpus, control = list(dictionary = getDictionary()))
+  test <- as.matrix(tdm)
+  predictions <- predict(getKNNTrainedSentimentAnalysisModel(useCache = TRUE), newdata=test)
+  return(predictions)
 }
 
 getKNNConfusionMatrix <- function(useCache = TRUE) {
