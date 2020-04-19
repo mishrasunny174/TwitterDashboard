@@ -58,7 +58,7 @@ ui <- fluidPage(
                    offset = 0,
                    width = 4,
                    checkboxInput(
-                     label = "USE CACHED MODEL",
+                     label = "USE CACHED MODEL (Note: Retraining requires 2 Hour)",
                      inputId = "useCache",
                      value = TRUE
                    )
